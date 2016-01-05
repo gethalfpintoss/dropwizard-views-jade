@@ -8,7 +8,30 @@
   <packaging>jar</packaging>
 
   <name>dropwizard-views-jade</name>
-  <url>http://maven.apache.org</url>
+  <description>Allows you to use jade templates with dropwizards view rendering module</description>
+  <url>https://github.com/gethalfpintoss/dropwizard-views-jade</url>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Chris Auer</name>
+      <email>chris@enlightenmint.com</email>
+      <organization>Halfpint</organization>
+      <organizationUrl>http://www.gethalfpint.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:gethalfpintoss/dropwizard-views-jade.git</connection>
+    <developerConnection>scm:git:git@github.com:gethalfpintoss/dropwizard-views-jade.git</developerConnection>
+    <url>git@github.com:gethalfpintoss/dropwizard-views-jade.git</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
