@@ -21,28 +21,38 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Created by halfpint on 12/30/15.
+ * JadeViewRenderer is a views renderer designed to be used for dropwizard
+ * in order to render jade templates.
  */
 public class JadeViewRenderer implements ViewRenderer {
 
-    private final Logger logger = LoggerFactory.getLogger(JadeViewRenderer.class);
+    private final static Logger logger = LoggerFactory.getLogger(JadeViewRenderer.class);
 
     private final ObjectMapper mapper;
     private final LoadingCache<Class<? extends View>, JadeConfiguration> cache;
 
     private Map<String, String> props;
 
+    /**
+     * JadeViewRenderer default constructor will create a new instance of
+     * the jackson object mapper
+     */
     public JadeViewRenderer() {
         this(new ObjectMapper());
     }
 
+    /**
+     * JadeViewRenderer constructor that allows you to provide an instance
+     * of the object mapper.
+     * @param objectMapper
+     */
     private JadeViewRenderer(ObjectMapper objectMapper) {
         this.mapper = objectMapper;
         this.cache = CacheBuilder.newBuilder()
             .build(new CacheLoader<Class<? extends View>, JadeConfiguration>() {
                 @Override
                 public JadeConfiguration load(Class<? extends View> aClass) throws Exception {
-                    logger.debug("building new JadeConfiguration for view class {}", aClass);
+                    logger.debug("building new JadeConfiguration for views class {}", aClass);
                     JadeConfiguration config = new JadeConfiguration();
                     config.setTemplateLoader(new JadeTemplateLoader(aClass));
                     return config;
@@ -50,15 +60,24 @@ public class JadeViewRenderer implements ViewRenderer {
             });
     }
 
+    /**
+     * Render method will write the rendered output utilizing the
+     * properties on the views class and the template specified by the
+     * views to the provided outputstream
+     * @param view
+     * @param locale
+     * @param outputStream
+     * @throws IOException
+     */
     public void render(View view, Locale locale, OutputStream outputStream) throws IOException {
 
-        logger.debug("rendering jade view {}", view);
+        logger.debug("rendering jade views {}", view);
 
         final Map<String, Object> model = Try.of(() -> convert(view))
             .recover(this::recoverFromObjectMapping)
             .orElseThrow(Throwables::propagate);
 
-        logger.debug("view class converted into the following model {}", model);
+        logger.debug("views class converted into the following model {}", model);
 
         Try.of(() -> cache.get(view.getClass()))
             .andThen((config) -> {
@@ -71,19 +90,19 @@ public class JadeViewRenderer implements ViewRenderer {
     }
 
     /**
-     * Converts the view object into a hashmap using the provided
+     * Converts the views object into a hashmap using the provided
      * object mapper.
      * @param view
      * @return
      */
     private Map<String, Object> convert(final View view) {
-        logger.debug("converting view {} to hash map using provided object mapper", view);
+        logger.debug("converting views {} to hash map using provided object mapper", view);
         return mapper.convertValue(view, Map.class);
     }
 
     /**
      * Method that performs recovery from known exceptions when
-     * mapping view object into hash map
+     * mapping views object into hash map
      * @param throwable
      * @return
      */
@@ -95,21 +114,33 @@ public class JadeViewRenderer implements ViewRenderer {
     }
 
 
+    /**
+     * TODO: specify which properties we can configure
+     * @param map
+     */
     public void configure(Map<String, String> map) {
         this.props = map;
     }
 
+    /**
+     * Checks the views to see if the template ends with the jade suffix
+     * @param view
+     * @return
+     */
     public boolean isRenderable(View view) {
         return view.getTemplateName().endsWith(getSuffix());
     }
 
+    /**
+     * Returns the suffix to expect for templates
+     * @return
+     */
     public String getSuffix() {
         return ".jade";
     }
 
     /**
-     * Builder class that can be used to set
-     * a custom object mapper on the
+     * Builder class that can be used to set a custom object mapper on the
      * JadeViewRenderer
      */
     public class Builder {
