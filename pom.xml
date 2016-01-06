@@ -4,7 +4,7 @@
 
   <groupId>com.gethalfpint</groupId>
   <artifactId>dropwizard-views-jade</artifactId>
-  <version>${dropwizard.version}-1</version>
+  <version>0.9.1-1</version>
   <packaging>jar</packaging>
 
   <name>dropwizard-views-jade</name>
