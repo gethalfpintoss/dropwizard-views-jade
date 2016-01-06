@@ -8,4 +8,4 @@ env:
 jdk:
 - oraclejdk8
 after_success:
-- mvn nexus-staging:release --settings settings.xml
+- mvn clean deploy --settings settings.xml && mvn nexus-staging:release --settings settings.xml
