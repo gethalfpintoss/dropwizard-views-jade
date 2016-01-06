@@ -108,8 +108,8 @@ public class JadeViewRenderer implements ViewRenderer {
      */
     private Map<String, Object> recoverFromObjectMapping(Throwable throwable) {
         return Match.of(throwable)
-            .when((IllegalArgumentException e) -> e.getCause().getMessage().contains("no properties discovered"))
-            .then(()->new HashMap())
+            .when((IllegalArgumentException e) -> Boolean.TRUE.equals(e.getCause().getMessage().contains("no properties discovered")))
+            .then(() -> new HashMap())
             .orElseThrow(() -> Throwables.propagate(throwable));
     }
 

@@ -62,8 +62,8 @@ public class JadeTemplateLoader implements TemplateLoader {
     private long lastModifiedFromResource(URL url) {
         return new File(
                 Match.of(url)
-                        .when((URL val) -> val.getProtocol().equals("file")).then(url::getFile)
-                        .when((URL val) -> val.getProtocol().equals("jar")).then((URL val) -> {
+                        .when((URL val) -> Boolean.TRUE.equals(val.getProtocol().equals("file"))).then(url::getFile)
+                        .when((URL val) -> Boolean.TRUE.equals(val.getProtocol().equals("jar"))).then((URL val) -> {
                     return Try.of(()->((JarURLConnection) val.openConnection()).getJarFile().getName())
                         .onFailure(Throwables::propagate)
                         .get();
