@@ -1,11 +1,5 @@
 sudo: required
 dist: trusty
 language: java
-env:
-  global:
-  - SONATYPE_USERNAME=chrisauer
-  - secure: hpPXwjcOqsJS/T7N4XOkSJ0sjgi4ZYWO+nD2z6prvIhL0U/6tPaqSjQRwnvrVHcuz4ObKvHWvCtd8zU/J0FmJjlWrFM+UPvsFeqXkLPRuNpTdLZjyoI693RlhHV/NN4XC5T5FwpPOyEhsv0+QDjecLzAvij7NhHnpf1E6yoO/Yrab7BWUKq9VTJWwruam6MGbtpRWpvsXIIT3NBn5A97rwJLc3yQar3ysT2MEzIxeCXXjm+K54Bxckamp6sBYiAVM7SMXwu+l3u2s38cmFOBKvXwA9DbYyCPmXWHzxiaWyhEY8hfNMiWQsrJfC7cwMFqo1rjcpP1Pp6GfmJKCCz289752XzmKy+jtE9kUw90mD/F2iqcAPI3dGvAOS8pp2EVDt4JwwomB4kUPg/YS9037oSCLF0GGSBgFW2Sy1ITqMj/LiCAhY6nbXbxZ1CxSCdyFWFz5ltsWmodcGd7IUwL3ghGYWbMek8rVTR072xDdDj8dMYTOjFH0eCBb8a+DbSYBo9AYkhDSmncstmJwEHMcCEsmf7iwA6Eo1+EscO39/R4P+lZyQiA2oWN5tn1u4AYihIrmgnTM043UDajbN7d7BgFb3b6Mp/v5/tnsZVH7cKWUgyZq/X6sgj3Vfdwm8N+YYvKw/373CKGz3UddB71dI1ww1LE6aVy+6nfmz+kF0k=
 jdk:
 - oraclejdk8
-after_success:
-- mvn clean deploy --settings settings.xml && mvn nexus-staging:release --settings settings.xml
